@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+</head>
+<body>
+  <input id = 'name' placeholder="First Name"></input>
+  <input id = 'lastName' placeholder="Last Name"></input>
+  <input id = 'date' placeholder="date"></input>
+  <button onclick = "check()">Click Me!</button>
+  <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAhWWcAQSBJU2qEWJ2dASl-s7qF6Fz1DGg",
+      authDomain: "jarvis-calculator.firebaseapp.com",
+      databaseURL: "https://jarvis-calculator.firebaseio.com",
+      projectId: "jarvis-calculator",
+      storageBucket: "jarvis-calculator.appspot.com",
+      messagingSenderId: "620919657084"
+    };
+    firebase.initializeApp(config);
+        // Initialize Cloud Firestore through Firebase
+    var db = firebase.firestore();
+
+    // Disable deprecated features
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    function check(){
+      db.collection("users").add({
+        first: document.getElementById('name').value,
+        last: document.getElementById('lastName').value,
+        born: document.getElementById('date').value
+      }).then(function(docRef){
+          console.log("Document written with id: ", docRef.id);
+      }).catch(function(error){
+          console.log("Error adding document: ", error);
+      });
+    }
+  </script>
+</body>
+</html>
